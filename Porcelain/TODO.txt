@@ -1,0 +1,4 @@
+﻿
+- make sure to start implementing the System Setting View for the editor so we can do pre existing setting such as
+Game name and such. We will need an Setting Manager but we could technically bake this into the Graphic class itself but 
+an setting class seems more appropriate.
