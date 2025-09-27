@@ -1,5 +1,6 @@
 //Code for Controls/ButtonStandard (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Gum.Converters;
 using Gum.DataTypes;
 using Gum.Managers;
@@ -8,32 +9,36 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class ButtonStandardRuntime : ContainerRuntime
 {
-    partial class ButtonStandardRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ButtonStandard", typeof(ButtonStandardRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.Button)] = typeof(ButtonStandardRuntime);
-        }
-        public MonoGameGum.Forms.Controls.Button FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.Button;
-        public enum ButtonCategory
-        {
-            Enabled,
-            Disabled,
-            Highlighted,
-            Pushed,
-            HighlightedFocused,
-            Focused,
-            DisabledFocused,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ButtonStandard", typeof(ButtonStandardRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.Button)] = typeof(ButtonStandardRuntime);
+    }
+    public MonoGameGum.Forms.Controls.Button FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.Button;
+    public enum ButtonCategory
+    {
+        Enabled,
+        Disabled,
+        Highlighted,
+        Pushed,
+        HighlightedFocused,
+        Focused,
+        DisabledFocused,
+    }
 
-        public ButtonCategory ButtonCategoryState
+    ButtonCategory? _buttonCategoryState;
+    public ButtonCategory? ButtonCategoryState
+    {
+        get => _buttonCategoryState;
+        set
         {
-            set
+            _buttonCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("ButtonCategory"))
                 {
@@ -49,39 +54,39 @@ namespace Tricksters.Components
                 }
             }
         }
-        public NineSliceRuntime Background { get; protected set; }
-        public TextRuntime TextInstance { get; protected set; }
-        public NineSliceRuntime FocusedIndicator { get; protected set; }
-
-        public string ButtonDisplayText
-        {
-            get => TextInstance.Text;
-            set => TextInstance.Text = value;
-        }
-
-        public ButtonStandardRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/ButtonStandard");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.Button(this);
-            }
-            Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
-            TextInstance = this.GetGraphicalUiElementByName("TextInstance") as TextRuntime;
-            FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public NineSliceRuntime Background { get; protected set; }
+    public TextRuntime TextInstance { get; protected set; }
+    public NineSliceRuntime FocusedIndicator { get; protected set; }
+
+    public string ButtonDisplayText
+    {
+        get => TextInstance.Text;
+        set => TextInstance.Text = value;
+    }
+
+    public ButtonStandardRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/ButtonStandard");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.Button(this);
+        }
+        Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
+        TextInstance = this.GetGraphicalUiElementByName("TextInstance") as TextRuntime;
+        FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

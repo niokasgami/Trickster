@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tricksters", "Tricksters\Tricksters.csproj", "{1C8E5D63-6EF4-4C9B-BC35-2E7C815B10E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Porcelain", "..\..\Fable_maker\Porcelain\Porcelain\Porcelain.csproj", "{1F3C12FE-60A7-4745-AD7D-E3A859F55BCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{1C8E5D63-6EF4-4C9B-BC35-2E7C815B10E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C8E5D63-6EF4-4C9B-BC35-2E7C815B10E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C8E5D63-6EF4-4C9B-BC35-2E7C815B10E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F3C12FE-60A7-4745-AD7D-E3A859F55BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F3C12FE-60A7-4745-AD7D-E3A859F55BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F3C12FE-60A7-4745-AD7D-E3A859F55BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F3C12FE-60A7-4745-AD7D-E3A859F55BCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

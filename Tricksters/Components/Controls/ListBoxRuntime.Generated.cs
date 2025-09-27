@@ -1,5 +1,6 @@
 //Code for Controls/ListBox (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,29 +10,33 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class ListBoxRuntime : ContainerRuntime
 {
-    partial class ListBoxRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ListBox", typeof(ListBoxRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ListBox)] = typeof(ListBoxRuntime);
-        }
-        public MonoGameGum.Forms.Controls.ListBox FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ListBox;
-        public enum ListBoxCategory
-        {
-            Enabled,
-            Disabled,
-            Focused,
-            DisabledFocused,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ListBox", typeof(ListBoxRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ListBox)] = typeof(ListBoxRuntime);
+    }
+    public MonoGameGum.Forms.Controls.ListBox FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ListBox;
+    public enum ListBoxCategory
+    {
+        Enabled,
+        Disabled,
+        Focused,
+        DisabledFocused,
+    }
 
-        public ListBoxCategory ListBoxCategoryState
+    ListBoxCategory? _listBoxCategoryState;
+    public ListBoxCategory? ListBoxCategoryState
+    {
+        get => _listBoxCategoryState;
+        set
         {
-            set
+            _listBoxCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("ListBoxCategory"))
                 {
@@ -47,37 +52,37 @@ namespace Tricksters.Components
                 }
             }
         }
-        public NineSliceRuntime Background { get; protected set; }
-        public ScrollBarRuntime VerticalScrollBarInstance { get; protected set; }
-        public ContainerRuntime ClipContainerInstance { get; protected set; }
-        public ContainerRuntime InnerPanelInstance { get; protected set; }
-        public NineSliceRuntime FocusedIndicator { get; protected set; }
-
-        public ListBoxRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/ListBox");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.ListBox(this);
-            }
-            Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
-            VerticalScrollBarInstance = this.GetGraphicalUiElementByName("VerticalScrollBarInstance") as ScrollBarRuntime;
-            ClipContainerInstance = this.GetGraphicalUiElementByName("ClipContainerInstance") as ContainerRuntime;
-            InnerPanelInstance = this.GetGraphicalUiElementByName("InnerPanelInstance") as ContainerRuntime;
-            FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public NineSliceRuntime Background { get; protected set; }
+    public ScrollBarRuntime VerticalScrollBarInstance { get; protected set; }
+    public ContainerRuntime ClipContainerInstance { get; protected set; }
+    public ContainerRuntime InnerPanelInstance { get; protected set; }
+    public NineSliceRuntime FocusedIndicator { get; protected set; }
+
+    public ListBoxRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/ListBox");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.ListBox(this);
+        }
+        Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
+        VerticalScrollBarInstance = this.GetGraphicalUiElementByName("VerticalScrollBarInstance") as ScrollBarRuntime;
+        ClipContainerInstance = this.GetGraphicalUiElementByName("ClipContainerInstance") as ContainerRuntime;
+        InnerPanelInstance = this.GetGraphicalUiElementByName("InnerPanelInstance") as ContainerRuntime;
+        FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

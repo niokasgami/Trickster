@@ -1,5 +1,6 @@
 //Code for Controls/ScrollBar (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,25 +10,29 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class ScrollBarRuntime : ContainerRuntime
 {
-    partial class ScrollBarRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ScrollBar", typeof(ScrollBarRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ScrollBar)] = typeof(ScrollBarRuntime);
-        }
-        public MonoGameGum.Forms.Controls.ScrollBar FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ScrollBar;
-        public enum ScrollBarCategory
-        {
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ScrollBar", typeof(ScrollBarRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ScrollBar)] = typeof(ScrollBarRuntime);
+    }
+    public MonoGameGum.Forms.Controls.ScrollBar FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ScrollBar;
+    public enum ScrollBarCategory
+    {
+    }
 
-        public ScrollBarCategory ScrollBarCategoryState
+    ScrollBarCategory? _scrollBarCategoryState;
+    public ScrollBarCategory? ScrollBarCategoryState
+    {
+        get => _scrollBarCategoryState;
+        set
         {
-            set
+            _scrollBarCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("ScrollBarCategory"))
                 {
@@ -43,37 +48,37 @@ namespace Tricksters.Components
                 }
             }
         }
-        public ButtonIconRuntime UpButtonInstance { get; protected set; }
-        public ButtonIconRuntime DownButtonInstance { get; protected set; }
-        public ContainerRuntime TrackInstance { get; protected set; }
-        public NineSliceRuntime TrackBackground { get; protected set; }
-        public ButtonStandardRuntime ThumbInstance { get; protected set; }
-
-        public ScrollBarRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/ScrollBar");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.ScrollBar(this);
-            }
-            UpButtonInstance = this.GetGraphicalUiElementByName("UpButtonInstance") as ButtonIconRuntime;
-            DownButtonInstance = this.GetGraphicalUiElementByName("DownButtonInstance") as ButtonIconRuntime;
-            TrackInstance = this.GetGraphicalUiElementByName("TrackInstance") as ContainerRuntime;
-            TrackBackground = this.GetGraphicalUiElementByName("TrackBackground") as NineSliceRuntime;
-            ThumbInstance = this.GetGraphicalUiElementByName("ThumbInstance") as ButtonStandardRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public ButtonIconRuntime UpButtonInstance { get; protected set; }
+    public ButtonIconRuntime DownButtonInstance { get; protected set; }
+    public ContainerRuntime TrackInstance { get; protected set; }
+    public NineSliceRuntime TrackBackground { get; protected set; }
+    public ButtonStandardRuntime ThumbInstance { get; protected set; }
+
+    public ScrollBarRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/ScrollBar");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.ScrollBar(this);
+        }
+        UpButtonInstance = this.GetGraphicalUiElementByName("UpButtonInstance") as ButtonIconRuntime;
+        DownButtonInstance = this.GetGraphicalUiElementByName("DownButtonInstance") as ButtonIconRuntime;
+        TrackInstance = this.GetGraphicalUiElementByName("TrackInstance") as ContainerRuntime;
+        TrackBackground = this.GetGraphicalUiElementByName("TrackBackground") as NineSliceRuntime;
+        ThumbInstance = this.GetGraphicalUiElementByName("ThumbInstance") as ButtonStandardRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

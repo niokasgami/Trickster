@@ -1,5 +1,6 @@
 //Code for Controls/RadioButton (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,39 +10,43 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class RadioButtonRuntime : ContainerRuntime
 {
-    partial class RadioButtonRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/RadioButton", typeof(RadioButtonRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.RadioButton)] = typeof(RadioButtonRuntime);
-        }
-        public MonoGameGum.Forms.Controls.RadioButton FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.RadioButton;
-        public enum RadioButtonCategory
-        {
-            EnabledOn,
-            EnabledOff,
-            DisabledOn,
-            DisabledOff,
-            HighlightedOn,
-            HighlightedOff,
-            PushedOn,
-            PushedOff,
-            FocusedOn,
-            FocusedOff,
-            HighlightedFocusedOn,
-            HighlightedFocusedOff,
-            DisabledFocusedOn,
-            DisabledFocusedOff,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/RadioButton", typeof(RadioButtonRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.RadioButton)] = typeof(RadioButtonRuntime);
+    }
+    public MonoGameGum.Forms.Controls.RadioButton FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.RadioButton;
+    public enum RadioButtonCategory
+    {
+        EnabledOn,
+        EnabledOff,
+        DisabledOn,
+        DisabledOff,
+        HighlightedOn,
+        HighlightedOff,
+        PushedOn,
+        PushedOff,
+        FocusedOn,
+        FocusedOff,
+        HighlightedFocusedOn,
+        HighlightedFocusedOff,
+        DisabledFocusedOn,
+        DisabledFocusedOff,
+    }
 
-        public RadioButtonCategory RadioButtonCategoryState
+    RadioButtonCategory? _radioButtonCategoryState;
+    public RadioButtonCategory? RadioButtonCategoryState
+    {
+        get => _radioButtonCategoryState;
+        set
         {
-            set
+            _radioButtonCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("RadioButtonCategory"))
                 {
@@ -57,41 +62,41 @@ namespace Tricksters.Components
                 }
             }
         }
-        public NineSliceRuntime RadioBackground { get; protected set; }
-        public IconRuntime Radio { get; protected set; }
-        public TextRuntime TextInstance { get; protected set; }
-        public NineSliceRuntime FocusedIndicator { get; protected set; }
-
-        public string RadioDisplayText
-        {
-            get => TextInstance.Text;
-            set => TextInstance.Text = value;
-        }
-
-        public RadioButtonRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/RadioButton");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.RadioButton(this);
-            }
-            RadioBackground = this.GetGraphicalUiElementByName("RadioBackground") as NineSliceRuntime;
-            Radio = this.GetGraphicalUiElementByName("Radio") as IconRuntime;
-            TextInstance = this.GetGraphicalUiElementByName("TextInstance") as TextRuntime;
-            FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public NineSliceRuntime RadioBackground { get; protected set; }
+    public IconRuntime Radio { get; protected set; }
+    public TextRuntime TextInstance { get; protected set; }
+    public NineSliceRuntime FocusedIndicator { get; protected set; }
+
+    public string RadioDisplayText
+    {
+        get => TextInstance.Text;
+        set => TextInstance.Text = value;
+    }
+
+    public RadioButtonRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/RadioButton");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.RadioButton(this);
+        }
+        RadioBackground = this.GetGraphicalUiElementByName("RadioBackground") as NineSliceRuntime;
+        Radio = this.GetGraphicalUiElementByName("Radio") as IconRuntime;
+        TextInstance = this.GetGraphicalUiElementByName("TextInstance") as TextRuntime;
+        FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

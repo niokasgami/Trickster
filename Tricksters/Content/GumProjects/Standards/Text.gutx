@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<StandardElementSave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<StandardElementSave xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>Text</Name>
   <State>
     <Name>Default</Name>
@@ -89,7 +89,7 @@
     <Variable>
       <Type>DimensionUnitType</Type>
       <Name>HeightUnits</Name>
-      <Value xsi:type="xsd:int">4</Value>
+      <Value xsi:type="xsd:int">0</Value>
       <Category>Dimensions</Category>
       <SetsValue>true</SetsValue>
     </Variable>
@@ -151,6 +151,12 @@
     <Variable>
       <Type>int?</Type>
       <Name>MaxLettersToShow</Name>
+      <Category>Text</Category>
+      <SetsValue>true</SetsValue>
+    </Variable>
+    <Variable>
+      <Type>int?</Type>
+      <Name>MaxNumberOfLines</Name>
       <Category>Text</Category>
       <SetsValue>true</SetsValue>
     </Variable>
@@ -270,7 +276,7 @@
     <Variable>
       <Type>DimensionUnitType</Type>
       <Name>WidthUnits</Name>
-      <Value xsi:type="xsd:int">4</Value>
+      <Value xsi:type="xsd:int">0</Value>
       <Category>Dimensions</Category>
       <SetsValue>true</SetsValue>
     </Variable>

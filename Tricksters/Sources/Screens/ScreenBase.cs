@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Gum.DataTypes;
 using Gum.Managers;
 using Gum.Wireframe;
@@ -10,6 +12,7 @@ using MonoGame.Extended.Screens.Transitions;
 using MonoGameGum;
 using MonoGameGum.Forms;
 using MonoGameGum.Forms.Controls;
+using Tricksters.Display;
 
 
 namespace Tricksters.Screens;
@@ -29,16 +32,24 @@ public abstract class ScreenBase(Game game) : Screen
 
   protected GumProjectSave gumProject;
 
+  protected ScreenSprite fadeSprite;
+
   public override void Initialize()
   {
     gumProject = ObjectFinder.Self.GumProjectSave;
+    fadeSprite = new ScreenSprite(GraphicsDevice);
     base.Initialize();
   }
 
+  public override void Update(GameTime gameTime)
+  {
+    fadeSprite?.Update(gameTime);
+  }
   public override void Draw(GameTime gameTime)
   {
     GraphicsDevice.Clear(Color.CornflowerBlue);
     GumUi.Draw();
+    fadeSprite?.Draw(gameTime);
   }
 
   /// <summary>
@@ -72,5 +83,35 @@ public abstract class ScreenBase(Game game) : Screen
   protected T GetElement<T>(GraphicalUiElement obj,string name) where T: FrameworkElement
   {
     return obj.GetFrameworkElementByName<T>(name);
+  }
+
+  protected List<T> GetElementChildren<T>(FrameworkElement obj, string name) where T: GraphicalUiElement
+  {
+    var children = obj.Visual.Children;
+    var list = new List<T>();
+    foreach (var child in children)
+    {
+      if(child is T t)
+        list.Add(t);
+    }
+    return list;
+  }
+
+  /// <summary>
+  /// Fadeout the screen
+  /// </summary>
+  /// <param name="duration"></param>
+  protected void FadeOut(float duration)
+  {
+    fadeSprite.FadeOut(duration, Color.Black);
+  }
+
+  /// <summary>
+  /// fade in the screen
+  /// </summary>
+  /// <param name="duration"></param>
+  protected void FadeIn(float duration)
+  {
+    fadeSprite.FadeIn(duration, Color.Black);
   }
 }

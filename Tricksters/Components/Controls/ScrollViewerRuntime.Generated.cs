@@ -1,5 +1,6 @@
 //Code for Controls/ScrollViewer (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,27 +10,31 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class ScrollViewerRuntime : ContainerRuntime
 {
-    partial class ScrollViewerRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ScrollViewer", typeof(ScrollViewerRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ScrollViewer)] = typeof(ScrollViewerRuntime);
-        }
-        public MonoGameGum.Forms.Controls.ScrollViewer FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ScrollViewer;
-        public enum ScrollBarVisibility
-        {
-            NoScrollBar,
-            VerticalScrollVisible,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/ScrollViewer", typeof(ScrollViewerRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.ScrollViewer)] = typeof(ScrollViewerRuntime);
+    }
+    public MonoGameGum.Forms.Controls.ScrollViewer FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.ScrollViewer;
+    public enum ScrollBarVisibility
+    {
+        NoScrollBar,
+        VerticalScrollVisible,
+    }
 
-        public ScrollBarVisibility ScrollBarVisibilityState
+    ScrollBarVisibility? _scrollBarVisibilityState;
+    public ScrollBarVisibility? ScrollBarVisibilityState
+    {
+        get => _scrollBarVisibilityState;
+        set
         {
-            set
+            _scrollBarVisibilityState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("ScrollBarVisibility"))
                 {
@@ -45,35 +50,35 @@ namespace Tricksters.Components
                 }
             }
         }
-        public NineSliceRuntime Background { get; protected set; }
-        public ScrollBarRuntime VerticalScrollBarInstance { get; protected set; }
-        public ContainerRuntime ClipContainerInstance { get; protected set; }
-        public ContainerRuntime InnerPanelInstance { get; protected set; }
-
-        public ScrollViewerRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/ScrollViewer");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.ScrollViewer(this);
-            }
-            Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
-            VerticalScrollBarInstance = this.GetGraphicalUiElementByName("VerticalScrollBarInstance") as ScrollBarRuntime;
-            ClipContainerInstance = this.GetGraphicalUiElementByName("ClipContainerInstance") as ContainerRuntime;
-            InnerPanelInstance = this.GetGraphicalUiElementByName("InnerPanelInstance") as ContainerRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public NineSliceRuntime Background { get; protected set; }
+    public ScrollBarRuntime VerticalScrollBarInstance { get; protected set; }
+    public ContainerRuntime ClipContainerInstance { get; protected set; }
+    public ContainerRuntime InnerPanelInstance { get; protected set; }
+
+    public ScrollViewerRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/ScrollViewer");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.ScrollViewer(this);
+        }
+        Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
+        VerticalScrollBarInstance = this.GetGraphicalUiElementByName("VerticalScrollBarInstance") as ScrollBarRuntime;
+        ClipContainerInstance = this.GetGraphicalUiElementByName("ClipContainerInstance") as ContainerRuntime;
+        InnerPanelInstance = this.GetGraphicalUiElementByName("InnerPanelInstance") as ContainerRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

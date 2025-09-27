@@ -16,11 +16,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Gum.MonoGame" Version="2025.4.23.1" />
-        <PackageReference Include="MonoGame.Extended" Version="4.0.4" />
-        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="4.0.4" />
-        <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.*"/>
-        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*"/>
+        <PackageReference Include="Gum.MonoGame" Version="2025.9.27.1" />
+        <PackageReference Include="MonoGame.Extended" Version="5.1.0" />
+        <PackageReference Include="MonoGame.Extended.Content.Pipeline" Version="5.1.0" />
+        <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.5-develop.11" />
+        <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.5-develop.11" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Content\GumProjects\" />
@@ -29,6 +30,9 @@
         <None Update="Content/GumProjects/**/*.*">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Fable_maker\Porcelain\Porcelain\Porcelain.csproj" />
     </ItemGroup>
     <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
         <Message Text="Restoring dotnet tools" Importance="High"/>

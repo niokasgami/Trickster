@@ -1,7 +1,8 @@
 {
-  "CommonUsingStatements": "using Gum.Converters;\r\nusing Gum.DataTypes;\r\nusing Gum.Managers;\r\nusing Gum.Wireframe;\r\n\r\nusing RenderingLibrary.Graphics;\r\n\r\nusing System.Linq;\r\n",
+  "CommonUsingStatements": "using Gum.Converters;\nusing Gum.DataTypes;\nusing Gum.Managers;\nusing Gum.Wireframe;\n\nusing RenderingLibrary.Graphics;\n\nusing System.Linq;\nusing MonoGameGum.GueDeriving;",
   "CodeProjectRoot": "C:\\Users\\nioka\\Documents\\Game_dev\\Tricksters\\Tricksters\\",
   "RootNamespace": "Tricksters",
+  "AppendFolderToNamespace": false,
   "InheritanceLocation": 1,
   "ObjectInstantiationType": 1,
   "DefaultScreenBase": "Gum.Wireframe.BindableGue",

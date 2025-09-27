@@ -1,5 +1,6 @@
 //Code for Controls/Slider (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,29 +10,33 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class SliderRuntime : ContainerRuntime
 {
-    partial class SliderRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/Slider", typeof(SliderRuntime));
-            MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.Slider)] = typeof(SliderRuntime);
-        }
-        public MonoGameGum.Forms.Controls.Slider FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.Slider;
-        public enum SliderCategory
-        {
-            Enabled,
-            Focused,
-            Highlighted,
-            HighlightedFocused,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/Slider", typeof(SliderRuntime));
+        MonoGameGum.Forms.Controls.FrameworkElement.DefaultFormsComponents[typeof(MonoGameGum.Forms.Controls.Slider)] = typeof(SliderRuntime);
+    }
+    public MonoGameGum.Forms.Controls.Slider FormsControl => FormsControlAsObject as MonoGameGum.Forms.Controls.Slider;
+    public enum SliderCategory
+    {
+        Enabled,
+        Focused,
+        Highlighted,
+        HighlightedFocused,
+    }
 
-        public SliderCategory SliderCategoryState
+    SliderCategory? _sliderCategoryState;
+    public SliderCategory? SliderCategoryState
+    {
+        get => _sliderCategoryState;
+        set
         {
-            set
+            _sliderCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("SliderCategory"))
                 {
@@ -47,41 +52,41 @@ namespace Tricksters.Components
                 }
             }
         }
-        public ContainerRuntime TrackInstance { get; protected set; }
-        public NineSliceRuntime NineSliceInstance { get; protected set; }
-        public ButtonStandardRuntime ThumbInstance { get; protected set; }
-        public NineSliceRuntime FocusedIndicator { get; protected set; }
-
-        public float SliderPercent
-        {
-            get => ThumbInstance.X;
-            set => ThumbInstance.X = value;
-        }
-
-        public SliderRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/Slider");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            if (FormsControl == null)
-            {
-                FormsControlAsObject = new MonoGameGum.Forms.Controls.Slider(this);
-            }
-            TrackInstance = this.GetGraphicalUiElementByName("TrackInstance") as ContainerRuntime;
-            NineSliceInstance = this.GetGraphicalUiElementByName("NineSliceInstance") as NineSliceRuntime;
-            ThumbInstance = this.GetGraphicalUiElementByName("ThumbInstance") as ButtonStandardRuntime;
-            FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public ContainerRuntime TrackInstance { get; protected set; }
+    public NineSliceRuntime NineSliceInstance { get; protected set; }
+    public ButtonStandardRuntime ThumbInstance { get; protected set; }
+    public NineSliceRuntime FocusedIndicator { get; protected set; }
+
+    public float SliderPercent
+    {
+        get => ThumbInstance.X;
+        set => ThumbInstance.X = value;
+    }
+
+    public SliderRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/Slider");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        if (FormsControl == null)
+        {
+            FormsControlAsObject = new MonoGameGum.Forms.Controls.Slider(this);
+        }
+        TrackInstance = this.GetGraphicalUiElementByName("TrackInstance") as ContainerRuntime;
+        NineSliceInstance = this.GetGraphicalUiElementByName("NineSliceInstance") as NineSliceRuntime;
+        ThumbInstance = this.GetGraphicalUiElementByName("ThumbInstance") as ButtonStandardRuntime;
+        FocusedIndicator = this.GetGraphicalUiElementByName("FocusedIndicator") as NineSliceRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

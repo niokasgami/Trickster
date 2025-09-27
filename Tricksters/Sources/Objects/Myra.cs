@@ -1,6 +1,7 @@
 ﻿namespace Tricksters.Objects;
-
-public class Myra
+/*
+public class Myra : GameObject
 {
   
 }
+*/

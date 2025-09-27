@@ -1,5 +1,6 @@
 //Code for Controls/PlayerJoinViewItem (Container)
 using GumRuntime;
+using MonoGameGum.GueDeriving;
 using Tricksters.Components;
 using Gum.Converters;
 using Gum.DataTypes;
@@ -9,46 +10,50 @@ using Gum.Wireframe;
 using RenderingLibrary.Graphics;
 
 using System.Linq;
-
-namespace Tricksters.Components
+using MonoGameGum.GueDeriving;
+namespace Tricksters.Components;
+partial class PlayerJoinViewItemRuntime : ContainerRuntime
 {
-    partial class PlayerJoinViewItemRuntime:ContainerRuntime
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    public static void RegisterRuntimeType()
     {
-        [System.Runtime.CompilerServices.ModuleInitializer]
-        public static void RegisterRuntimeType()
-        {
-            GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/PlayerJoinViewItem", typeof(PlayerJoinViewItemRuntime));
-        }
-        public enum PlayerJoinCategory
-        {
-            NotConnected,
-            Connected,
-            ConnectedAndJoined,
-        }
-        public enum PlayerIndexCategory
-        {
-            Player1,
-            Player2,
-            Player3,
-            Player4,
-        }
-        public enum GamepadLayoutCategory
-        {
-            Unknown,
-            Keyboard,
-            NES,
-            SuperNintendo,
-            Nintendo64,
-            GameCube,
-            SwitchPro,
-            Genesis,
-            Xbox360,
-            PlayStationDualShock,
-        }
+        GumRuntime.ElementSaveExtensions.RegisterGueInstantiationType("Controls/PlayerJoinViewItem", typeof(PlayerJoinViewItemRuntime));
+    }
+    public enum PlayerJoinCategory
+    {
+        NotConnected,
+        Connected,
+        ConnectedAndJoined,
+    }
+    public enum PlayerIndexCategory
+    {
+        Player1,
+        Player2,
+        Player3,
+        Player4,
+    }
+    public enum GamepadLayoutCategory
+    {
+        Unknown,
+        Keyboard,
+        NES,
+        SuperNintendo,
+        Nintendo64,
+        GameCube,
+        SwitchPro,
+        Genesis,
+        Xbox360,
+        PlayStationDualShock,
+    }
 
-        public PlayerJoinCategory PlayerJoinCategoryState
+    PlayerJoinCategory? _playerJoinCategoryState;
+    public PlayerJoinCategory? PlayerJoinCategoryState
+    {
+        get => _playerJoinCategoryState;
+        set
         {
-            set
+            _playerJoinCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("PlayerJoinCategory"))
                 {
@@ -64,10 +69,16 @@ namespace Tricksters.Components
                 }
             }
         }
+    }
 
-        public PlayerIndexCategory PlayerIndexCategoryState
+    PlayerIndexCategory? _playerIndexCategoryState;
+    public PlayerIndexCategory? PlayerIndexCategoryState
+    {
+        get => _playerIndexCategoryState;
+        set
         {
-            set
+            _playerIndexCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("PlayerIndexCategory"))
                 {
@@ -83,10 +94,16 @@ namespace Tricksters.Components
                 }
             }
         }
+    }
 
-        public GamepadLayoutCategory GamepadLayoutCategoryState
+    GamepadLayoutCategory? _gamepadLayoutCategoryState;
+    public GamepadLayoutCategory? GamepadLayoutCategoryState
+    {
+        get => _gamepadLayoutCategoryState;
+        set
         {
-            set
+            _gamepadLayoutCategoryState = value;
+            if(value != null)
             {
                 if(Categories.ContainsKey("GamepadLayoutCategory"))
                 {
@@ -102,29 +119,29 @@ namespace Tricksters.Components
                 }
             }
         }
-        public NineSliceRuntime Background { get; protected set; }
-        public TextRuntime ControllerDisplayNameTextInstance { get; protected set; }
-        public IconRuntime InputDeviceIcon { get; protected set; }
-
-        public PlayerJoinViewItemRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
-        {
-            if(fullInstantiation)
-            {
-                var element = ObjectFinder.Self.GetElementSave("Controls/PlayerJoinViewItem");
-                element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
-            }
-
-
-
-        }
-        public override void AfterFullCreation()
-        {
-            Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
-            ControllerDisplayNameTextInstance = this.GetGraphicalUiElementByName("ControllerDisplayNameTextInstance") as TextRuntime;
-            InputDeviceIcon = this.GetGraphicalUiElementByName("InputDeviceIcon") as IconRuntime;
-            CustomInitialize();
-        }
-        //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
-        partial void CustomInitialize();
     }
+    public NineSliceRuntime Background { get; protected set; }
+    public TextRuntime ControllerDisplayNameTextInstance { get; protected set; }
+    public IconRuntime InputDeviceIcon { get; protected set; }
+
+    public PlayerJoinViewItemRuntime(bool fullInstantiation = true, bool tryCreateFormsObject = true)
+    {
+        if(fullInstantiation)
+        {
+            var element = ObjectFinder.Self.GetElementSave("Controls/PlayerJoinViewItem");
+            element?.SetGraphicalUiElement(this, global::RenderingLibrary.SystemManagers.Default);
+        }
+
+
+
+    }
+    public override void AfterFullCreation()
+    {
+        Background = this.GetGraphicalUiElementByName("Background") as NineSliceRuntime;
+        ControllerDisplayNameTextInstance = this.GetGraphicalUiElementByName("ControllerDisplayNameTextInstance") as TextRuntime;
+        InputDeviceIcon = this.GetGraphicalUiElementByName("InputDeviceIcon") as IconRuntime;
+        CustomInitialize();
+    }
+    //Not assigning variables because Object Instantiation Type is set to By Name rather than Fully In Code
+    partial void CustomInitialize();
 }

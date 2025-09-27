@@ -1,6 +1,17 @@
-﻿namespace Tricksters.Screens;
+﻿using Gum.Wireframe;
+using Microsoft.Xna.Framework;
+using MonoGameGum;
 
-public class MainScreen
+namespace Tricksters.Screens;
+
+public class MainScreen(Game game) : ScreenBase(game)
 {
-  
+
+  private GraphicalUiElement _ui;
+  public override void Initialize()
+  {
+    base.Initialize();
+    _ui = GetScreen("Mainscreen").ToGraphicalUiElement();
+    _ui.AddToRoot();
+  }
 }
